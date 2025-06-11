@@ -549,12 +549,25 @@ export class GmailV2 implements INodeType {
 							}
 						}
 
+						const thread = await googleApiRequest.call(
+							this,
+							'GET',
+							`/gmail/v1/users/me/threads/${threadId}`,
+							{},
+							{ format: 'metadata', metadataHeaders: ['Message-ID'] },
+						);
+
+						const lastMessage = thread.messages.length - 1;
+						const messageId = thread.messages[lastMessage].payload.headers[0].value;
+
 						const email: IEmail = {
 							from: fromAlias,
 							to,
 							cc,
 							bcc,
 							replyTo,
+							reference: messageId,
+							inReplyTo: messageId,
 							subject: this.getNodeParameter('subject', i) as string,
 							...prepareEmailBody.call(this, i),
 							attachments,
