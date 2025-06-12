@@ -68,7 +68,7 @@ export const draftFields: INodeProperties[] = [
 	},
 	{
 		displayName:
-			'If you would like to reply to an existing thread, specify the same subject name as the thread you want to reply to here.',
+			'If you would like to reply to an existing thread, specify the same subject title as the thread you want to reply to here.',
 		name: 'threadNotice',
 		type: 'notice',
 		default: '',
